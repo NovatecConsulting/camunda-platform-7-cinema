@@ -12,7 +12,6 @@
     <bpmn:messageFlow id="Flow_15iv6az" sourceRef="Activity_05maijs" targetRef="Participant_1v83z50" />
     <bpmn:messageFlow id="Flow_1969sxh" sourceRef="Activity_1mfvup1" targetRef="Participant_0k0np1g" />
     <bpmn:messageFlow id="Flow_1vz0hji" sourceRef="Activity_02kk7a7" targetRef="Participant_1v83z50" />
-    <bpmn:messageFlow id="Flow_1bfbwvz" sourceRef="Activity_0noydsq" targetRef="Participant_1j7zjr7" />
   </bpmn:collaboration>
   <bpmn:process id="ticket-reservation" name="Ticket Reservation" isExecutable="true">
     <bpmn:task id="Activity_06efmqi" name="give money back" isForCompensation="true" />
@@ -95,7 +94,7 @@
     <bpmn:boundaryEvent id="Event_1iqwmws" attachedToRef="Activity_0uqhn0r">
       <bpmn:compensateEventDefinition id="CompensateEventDefinition_1v06ap7" />
     </bpmn:boundaryEvent>
-    <bpmn:serviceTask id="Activity_0kn1nqs" name="release seat" isForCompensation="true" camunda:delegateExpression="de.novatec.bpm.delegate.ReleaseSeatsDelegate" />
+    <bpmn:serviceTask id="Activity_0kn1nqs" name="release seat" isForCompensation="true" camunda:expression="${seatsDelegate.releaseSeats(execution)}" />
     <bpmn:serviceTask id="Activity_05maijs" name="release seats" camunda:expression="${seatsDelegate.releaseSeats(execution)}">
       <bpmn:incoming>Flow_07nnma2</bpmn:incoming>
       <bpmn:outgoing>Flow_1xcwr6d</bpmn:outgoing>
@@ -413,12 +412,6 @@
       <bpmndi:BPMNEdge id="Flow_1vz0hji_di" bpmnElement="Flow_1vz0hji">
         <di:waypoint x="510" y="467" />
         <di:waypoint x="510" y="140" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1bfbwvz_di" bpmnElement="Flow_1bfbwvz">
-        <di:waypoint x="960" y="467" />
-        <di:waypoint x="960" y="350" />
-        <di:waypoint x="1022" y="350" />
-        <di:waypoint x="1022" y="140" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
