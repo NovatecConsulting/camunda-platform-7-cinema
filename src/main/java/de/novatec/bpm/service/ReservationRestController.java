@@ -1,8 +1,13 @@
 package de.novatec.bpm.service;
 
+import de.novatec.bpm.variable.ProcessVariables;
 import de.novatec.bpm.model.Reservation;
 import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.variable.Variables;
+import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +26,13 @@ public class ReservationRestController {
     @Autowired
     RuntimeService runtimeService;
 
-    @GetMapping("/reservation/{id}")
-    @ResponseBody
-    public Reservation getReservation(@RequestParam String id) {
-        return new Reservation();
-    }
-
     @PostMapping("/reservation")
     public ResponseEntity reserveSeat(@RequestBody Reservation reservation) {
         Map<String, Object> variables = new HashMap<>();
-        variables.put("seats", reservation.getSeats());
-        variables.put("userId", reservation.getUserId());
+        variables.put(ProcessVariables.RESERVATION.getName(), reservation);
         runtimeService.startProcessInstanceByKey("ticket-reservation", reservation.getReservationId(), variables);
-        return new ResponseEntity<>("Reservation issued", HttpStatus.OK);
+        // get reservation and return it
+        return new ResponseEntity<>("Reservation issued", HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/reservation/{id}")
@@ -47,7 +46,7 @@ public class ReservationRestController {
             runtimeService.correlateMessage("SeatsVerifiedByCustomer", id);
             logger.error("The offer for reservation {} was accepeted", id);
             return new ResponseEntity<>("Reservation change accepted", HttpStatus.OK);
-        } catch(MismatchingMessageCorrelationException e) {
+        } catch (MismatchingMessageCorrelationException e) {
             logger.error("The reservation {} does not exist", id);
             return new ResponseEntity<>("Reservation doesn't exist", HttpStatus.NOT_FOUND);
         }

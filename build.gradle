@@ -15,5 +15,8 @@ repositories {
 
 dependencies {
     compile "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:3.4.1"
+    compile "org.camunda.spin:camunda-spin-dataformat-json-jackson:1.8.0" // add json as serializer
+    compile "org.camunda.bpm:camunda-engine-plugin-spin:7.12.0" // needed to activate spin
     compile "com.h2database:h2:1.4.200"
+    compile "com.google.zxing:core:3.4.0"
 }

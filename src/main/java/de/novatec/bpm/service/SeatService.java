@@ -41,4 +41,8 @@ public class SeatService {
         }
         return alternativeSeats;
     }
+
+    public int getTicketPrice(List<String> seats) {
+        return seats.size() * 9;
+    }
 }

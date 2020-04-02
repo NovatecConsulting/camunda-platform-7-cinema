@@ -1,21 +1,23 @@
 spring.application.name: processApplication
 spring:
   datasource:
-    url: jdbc:h2:mem:example-simple;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:camunda-cinema;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+
 camunda:
   bpm:
     admin-user:
       id: admin
       password: admin
       firstName: Admin
-    filter:
-      create: All tasks
     application:
       delete-upon-undeploy: false
       scan-for-process-definitions: true
       deploy-changed-only: true
       resume-previous-versions: true
       resume-previous-by: a value
+    default-serialization-format: application/json
+    filter:
+      create: All tasks
     job-execution:
       enabled: true
     metrics:
