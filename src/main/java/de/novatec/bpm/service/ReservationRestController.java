@@ -1,13 +1,10 @@
 package de.novatec.bpm.service;
 
-import de.novatec.bpm.variable.ProcessVariables;
 import de.novatec.bpm.model.Reservation;
+import de.novatec.bpm.variable.ProcessVariables;
+import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.variable.Variables;
-import org.camunda.bpm.engine.variable.value.ObjectValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +23,19 @@ public class ReservationRestController {
     @Autowired
     RuntimeService runtimeService;
 
+    @Autowired
+    HistoryService historyService;
+
+    @GetMapping("reservation/{id}")
+    public ResponseEntity getReservation(@PathVariable String id) {
+        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/reservation")
     public ResponseEntity reserveSeat(@RequestBody Reservation reservation) {
         Map<String, Object> variables = new HashMap<>();
         variables.put(ProcessVariables.RESERVATION.getName(), reservation);
         runtimeService.startProcessInstanceByKey("ticket-reservation", reservation.getReservationId(), variables);
-        // get reservation and return it
         return new ResponseEntity<>("Reservation issued", HttpStatus.ACCEPTED);
     }
 

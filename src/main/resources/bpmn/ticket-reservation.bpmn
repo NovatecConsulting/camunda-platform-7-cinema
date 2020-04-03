@@ -13,7 +13,7 @@
     <bpmn:messageFlow id="Flow_1969sxh" sourceRef="Activity_1mfvup1" targetRef="Participant_0k0np1g" />
     <bpmn:messageFlow id="Flow_1vz0hji" sourceRef="Activity_02kk7a7" targetRef="Participant_1v83z50" />
   </bpmn:collaboration>
-  <bpmn:process id="ticket-reservation" name="Ticket Reservation" isExecutable="true">
+  <bpmn:process id="ticket-reservation" name="Ticket Reservation" isExecutable="true" camunda:historyTimeToLive="P14D">
     <bpmn:task id="Activity_06efmqi" name="give money back" isForCompensation="true" />
     <bpmn:task id="Activity_0wblp37" name="send invoice to customer">
       <bpmn:incoming>Flow_0ffwyuj</bpmn:incoming>
