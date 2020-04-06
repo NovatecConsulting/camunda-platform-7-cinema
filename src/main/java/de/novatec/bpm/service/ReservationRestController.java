@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class ReservationRestController {
@@ -23,20 +24,14 @@ public class ReservationRestController {
     @Autowired
     RuntimeService runtimeService;
 
-    @Autowired
-    HistoryService historyService;
-
-    @GetMapping("reservation/{id}")
-    public ResponseEntity getReservation(@PathVariable String id) {
-        return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
-    }
-
     @PostMapping("/reservation")
     public ResponseEntity reserveSeat(@RequestBody Reservation reservation) {
+        String reservationId = "RESERVATION-" + UUID.randomUUID().toString();
+        reservation.setReservationId(reservationId);
         Map<String, Object> variables = new HashMap<>();
         variables.put(ProcessVariables.RESERVATION.getName(), reservation);
-        runtimeService.startProcessInstanceByKey("ticket-reservation", reservation.getReservationId(), variables);
-        return new ResponseEntity<>("Reservation issued", HttpStatus.ACCEPTED);
+        runtimeService.startProcessInstanceByKey("ticket-reservation", reservationId, variables);
+        return new ResponseEntity<>("Reservation issued: " + reservationId, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/reservation/{id}")
@@ -48,7 +43,7 @@ public class ReservationRestController {
     public ResponseEntity acceptOffer(@PathVariable String id) {
         try {
             runtimeService.correlateMessage("SeatsVerifiedByCustomer", id);
-            logger.error("The offer for reservation {} was accepeted", id);
+            logger.error("The offer for reservation {} was accepted", id);
             return new ResponseEntity<>("Reservation change accepted", HttpStatus.OK);
         } catch (MismatchingMessageCorrelationException e) {
             logger.error("The reservation {} does not exist", id);

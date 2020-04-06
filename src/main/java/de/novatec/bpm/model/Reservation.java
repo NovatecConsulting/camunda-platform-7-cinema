@@ -20,12 +20,12 @@ public class Reservation {
         this.userId = userId;
     }
 
-    public Reservation() {
-        this.reservationId = UUID.randomUUID().toString();
-    }
-
     public String getReservationId() {
         return reservationId;
+    }
+
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
     }
 
     public List<String> getSeats() {
