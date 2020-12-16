@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class SeatService {
 
-    Logger logger = LoggerFactory.getLogger(SeatService.class);
+    private final Logger logger = LoggerFactory.getLogger(SeatService.class);
+    private static final int MAX_SEATS_IN_ROW = 20;
+    private static final int MAX_ROWS = 26;
 
     public void reserveSeats(List<String> seats) {
         logSeatWithMessage(seats, "Seat reserved: {}");
@@ -21,17 +24,27 @@ public class SeatService {
     }
 
     public boolean seatsAvailable(List<String> seats) {
-        return seats.stream().anyMatch(seat -> seatAvailable());
+        return seats.stream().allMatch(seat -> seatAvailable());
     }
 
     public List<String> getAlternativeSeats(List<String> seats) {
         List<String> alternativeSeats = new ArrayList<>();
-        int index = 12;
+        int seat = getRandomStartingSeat(seats.size());
+        String row = getRandomRow();
         for (int i = 0; i < seats.size(); i++) {
-            alternativeSeats.add("C" + index);
-            index++;
+            alternativeSeats.add(row + seat);
+            seat++;
         }
         return alternativeSeats;
+    }
+
+    private int getRandomStartingSeat(int buffer) {
+        return Math.max(1, new Random().nextInt(MAX_SEATS_IN_ROW - buffer));
+    }
+
+    private String getRandomRow() {
+        char randomChar = (char) ('a' + new Random().nextInt(MAX_ROWS));
+        return String.valueOf(randomChar).toUpperCase();
     }
 
     public int getTicketPrice(List<String> seats) {

@@ -7,6 +7,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
 public class SeatsDelegate {
 
     Logger logger = LoggerFactory.getLogger(SeatsDelegate.class);
+
+    @Value("${server.port}")
+    private int port;
 
     @Autowired
     private SeatService seatService;
@@ -53,8 +57,7 @@ public class SeatsDelegate {
     public void offerAltSeats(DelegateExecution execution) {
         List<String> seats = VariableHandler.getAltSeats(execution);
         logger.info("The seats you selected are not available. Alternative seats are {}", seats);
-        logger.info("To accept these seats, click the following link: http://localhost:8080/offer/{}",
-                execution.getBusinessKey());
+        logger.info("To accept these seats, click the following link: http://localhost:{}/offer/{}", port, execution.getBusinessKey());
     }
 
     private List<String> getSeatsToReserve(DelegateExecution execution, boolean useOriginalSeats,
