@@ -10,8 +10,9 @@ Camunda Cinema is a showcase for the different concepts in Camunda BPM:
 - Event Subprocess
 
 ### Versionss
-- SpringBoot 2.3.1.RELEASE
+- SpringBoot 2.3
 - Camunda 7.14
+- H2 (in Memory DB) 1.4
 - JDK 11
 - ZXing (Zebra Crossing) 3.4 for QRCode generation
 
