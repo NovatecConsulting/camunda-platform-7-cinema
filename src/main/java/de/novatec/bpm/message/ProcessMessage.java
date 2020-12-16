@@ -4,11 +4,11 @@ public enum ProcessMessage {
 
     ISSUE_TICKETS("IssueTickets");
 
+    private String name;
+
     ProcessMessage(String name) {
         this.name = name;
     }
-
-    private String name;
 
     public String getName() {
         return this.name;

@@ -15,7 +15,7 @@ public class EndEventListener implements ExecutionListener {
         if (execution.getEventName().equals(EndEventListener.EVENTNAME_END)) {
             if (execution.getCurrentActivityName().contains("failed")) {
                 logger.info("End event with status failed was reached");
-                VariableHandler.setReservationSuccess(execution,false);
+                VariableHandler.setReservationSuccess(execution, false);
             } else {
                 logger.info("End event with status success was reached");
                 VariableHandler.setReservationSuccess(execution, true);

@@ -1,7 +1,6 @@
 package de.novatec.bpm.model;
 
 import java.util.List;
-import java.util.UUID;
 
 public class Reservation {
 
@@ -36,11 +35,6 @@ public class Reservation {
         this.seats = seats;
     }
 
-    @Override
-    public String toString() {
-        return "Sitze " + String.join(", ", seats);
-    }
-
     public int getPrice() {
         return price;
     }
@@ -63,5 +57,10 @@ public class Reservation {
 
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
+    }
+
+    @Override
+    public String toString() {
+        return "Sitze " + String.join(", ", seats);
     }
 }

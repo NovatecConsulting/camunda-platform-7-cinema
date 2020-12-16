@@ -53,10 +53,12 @@ public class SeatsDelegate {
     public void offerAltSeats(DelegateExecution execution) {
         List<String> seats = VariableHandler.getAltSeats(execution);
         logger.info("The seats you selected are not available. Alternative seats are {}", seats);
-        logger.info("To accept these seats, click the following link: http://localhost:8080/offer/{}", execution.getBusinessKey());
+        logger.info("To accept these seats, click the following link: http://localhost:8080/offer/{}",
+                execution.getBusinessKey());
     }
 
-    private List<String> getSeatsToReserve(DelegateExecution execution, boolean useOriginalSeats, Reservation reservation) {
+    private List<String> getSeatsToReserve(DelegateExecution execution, boolean useOriginalSeats,
+                                           Reservation reservation) {
         if (useOriginalSeats) {
             return reservation.getSeats();
         } else {

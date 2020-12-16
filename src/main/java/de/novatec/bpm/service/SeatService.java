@@ -20,16 +20,8 @@ public class SeatService {
         logSeatWithMessage(seats, "Seat released: {}");
     }
 
-    private void logSeatWithMessage(List<String> seats, String s) {
-        seats.forEach(seat -> logger.info(s, seat));
-    }
-
     public boolean seatsAvailable(List<String> seats) {
         return seats.stream().anyMatch(seat -> seatAvailable());
-    }
-
-    private boolean seatAvailable() {
-        return Math.random() > 0.15;  // in 15% of cases, seats are no longer available;
     }
 
     public List<String> getAlternativeSeats(List<String> seats) {
@@ -44,5 +36,13 @@ public class SeatService {
 
     public int getTicketPrice(List<String> seats) {
         return seats.size() * 9;
+    }
+
+    private void logSeatWithMessage(List<String> seats, String s) {
+        seats.forEach(seat -> logger.info(s, seat));
+    }
+
+    private boolean seatAvailable() {
+        return Math.random() > 0.15;  // in 15% of cases, seats are no longer available;
     }
 }

@@ -2,7 +2,6 @@ package de.novatec.bpm.service;
 
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.variable.ProcessVariables;
-import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import org.camunda.bpm.engine.RuntimeService;
 import org.slf4j.Logger;

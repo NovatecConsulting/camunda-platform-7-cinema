@@ -1,11 +1,6 @@
 package de.novatec.bpm.model;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class Ticket {
@@ -30,8 +25,8 @@ public class Ticket {
     }
 
     public void setInfo(String user, String reservierung, String ticketId) {
-        String vorstellung = new SimpleDateFormat("dd.MM.YY").format(new Date());
-        String jetzt = new SimpleDateFormat("dd.MM.YY HH:mm:ss").format(new Date());
+        String vorstellung = new SimpleDateFormat("dd.MM.yy").format(new Date());
+        String jetzt = new SimpleDateFormat("dd.MM.yy HH:mm:ss").format(new Date());
         this.info = String.format("Hallo %s, " +
                         "vielen Dank für deine Reservierung vom %s.\n" +
                         "Hier nochmal alle Daten im Überblick:\n" +
@@ -40,6 +35,6 @@ public class Ticket {
                         "Ticket id: %s\n" +
                         "Viel Spaß beim Film\n\n" +
                         "Dein Camunda Kino Team!",
-                user, jetzt, vorstellung, reservierung, ticketId);;
+                user, jetzt, vorstellung, reservierung, ticketId);
     }
 }

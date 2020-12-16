@@ -50,7 +50,9 @@ public class TicketDelegate {
 
     public void triggerTicketProcess(DelegateExecution execution) {
         Reservation reservation = VariableHandler.getReservation(execution);
-        runtimeService.startProcessInstanceByMessage(ProcessMessage.ISSUE_TICKETS.getName(), execution.getBusinessKey(), execution.getVariables());
-        logger.info("Tickets for reservation {} are going to be generated", reservation.getReservationId());
+        runtimeService.startProcessInstanceByMessage(ProcessMessage.ISSUE_TICKETS.getName(),
+                execution.getBusinessKey(), execution.getVariables());
+        logger.info("Tickets for reservation {} are going to be generated",
+                reservation.getReservationId());
     }
 }

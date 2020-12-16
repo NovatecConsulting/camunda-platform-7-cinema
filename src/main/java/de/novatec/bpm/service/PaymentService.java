@@ -11,7 +11,7 @@ public class PaymentService {
     Logger logger = LoggerFactory.getLogger(PaymentService.class);
 
     public void issueMoney(int ticketPrice, String iban, String bic) {
-        if(Math.random() < 0.25) {
+        if (Math.random() < 0.25) {
             logger.error("There was an issue with the payment");
             throw new BpmnError("B002");
         } else {

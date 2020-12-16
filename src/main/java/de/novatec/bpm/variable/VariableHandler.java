@@ -22,7 +22,7 @@ public class VariableHandler {
     }
 
     public static boolean getSeatsAreAvailable(DelegateExecution execution) {
-        Boolean value =  (Boolean) execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName());
+        Boolean value = (Boolean) execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName());
         checkIfSet(value, ProcessVariables.SEATS_AVAILABLE);
         return value;
     }
@@ -32,13 +32,14 @@ public class VariableHandler {
     }
 
     public static Reservation getReservation(DelegateExecution execution) {
-        Reservation reservation = (Reservation) execution.getVariable(ProcessVariables.RESERVATION.getName());
+        Reservation reservation = (Reservation) execution.getVariable(
+                ProcessVariables.RESERVATION.getName());
         checkIfSet(reservation, ProcessVariables.RESERVATION);
         return reservation;
     }
 
     public static List<String> getAltSeats(DelegateExecution execution) {
-        List<String> value =  (List<String>) execution.getVariable(ProcessVariables.ALT_SEATS.getName());
+        List<String> value = (List<String>) execution.getVariable(ProcessVariables.ALT_SEATS.getName());
         checkIfSet(value, ProcessVariables.ALT_SEATS);
         return value;
     }
@@ -52,28 +53,31 @@ public class VariableHandler {
     }
 
     public static Ticket getTicket(DelegateExecution execution) {
-        Ticket value =  (Ticket) execution.getVariable(ProcessVariables.TICKET.getName());
+        Ticket value = (Ticket) execution.getVariable(ProcessVariables.TICKET.getName());
         checkIfSet(value, ProcessVariables.TICKET);
         return value;
     }
 
     public static void setQRCode(DelegateExecution execution, File qrCode) {
-        FileValue fileValue = Variables.fileValue(qrCode.getName()).file(qrCode).mimeType("image/png").encoding("UTF-8").create();
+        FileValue fileValue = Variables.fileValue(qrCode.getName()).file(qrCode).mimeType("image/png")
+                .encoding("UTF-8").create();
         execution.setVariable(ProcessVariables.QR.getName(), fileValue);
     }
 
     public static File getQRCode(DelegateExecution execution) {
         TypedValue variableTyped = execution.getVariableTyped(ProcessVariables.QR.getName());
-        if(variableTyped.getType().equals(ValueType.FILE)) {
+        if (variableTyped.getType().equals(ValueType.FILE)) {
             return (File) variableTyped.getValue();
         } else {
-            throw new IllegalArgumentException(String.format("Variable %s is not typed as file", ProcessVariables.QR.getName()));
+            throw new IllegalArgumentException(
+                    String.format("Variable %s is not typed as file", ProcessVariables.QR.getName()));
         }
     }
 
     private static void checkIfSet(Object value, ProcessVariables variable) {
-        if(value == null) {
-            throw new IllegalArgumentException(String.format("Variable %s is not set", variable.getName()));
+        if (value == null) {
+            throw new IllegalArgumentException(
+                    String.format("Variable %s is not set", variable.getName()));
         }
     }
 }

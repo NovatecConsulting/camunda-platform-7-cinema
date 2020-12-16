@@ -23,11 +23,12 @@ public class QRCodeService {
 
     public File generateQRCode(String ticketId) throws WriterException, IOException {
         File qrCode = new File("build/tickets/" + ticketId + ".png");
-        qrCode.mkdirs();
+        boolean ignored = qrCode.mkdirs();
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix byteMatrix = qrCodeWriter.encode(ticketId, BarcodeFormat.QR_CODE, WIDTH, HEIGHT, hintMap);
+        BitMatrix byteMatrix = qrCodeWriter
+                .encode(ticketId, BarcodeFormat.QR_CODE, WIDTH, HEIGHT, hintMap);
         // Make the BufferedImage that are to hold the QRCode
         int matrixWidth = byteMatrix.getWidth();
         int matrixHeight = byteMatrix.getWidth();
