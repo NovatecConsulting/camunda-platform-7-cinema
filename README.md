@@ -16,7 +16,7 @@ Camunda Cinema is a showcase for the different concepts in Camunda BPM:
 - ZXing (Zebra Crossing) 3.4 for QRCode generation
 
 ## Process Model
-<img src="./src/main/resources/bpmn/ticket-reservation.png" width="800">
+<img src="./src/main/resources/bpmn/ticket-reservation.png" width="900">
 
 ## How to run it
 - start the application 
