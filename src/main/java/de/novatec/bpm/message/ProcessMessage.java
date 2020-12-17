@@ -4,7 +4,7 @@ public enum ProcessMessage {
 
     ISSUE_TICKETS("IssueTickets");
 
-    private String name;
+    private final String name;
 
     ProcessMessage(String name) {
         this.name = name;

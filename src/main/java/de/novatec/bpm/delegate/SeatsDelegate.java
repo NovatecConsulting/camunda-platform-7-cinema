@@ -6,22 +6,22 @@ import de.novatec.bpm.variable.VariableHandler;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 public class SeatsDelegate {
 
-    Logger logger = LoggerFactory.getLogger(SeatsDelegate.class);
+    private final Logger logger = LoggerFactory.getLogger(SeatsDelegate.class);
 
     @Value("${server.port}")
     private int port;
 
-    @Autowired
-    private SeatService seatService;
+    private final SeatService seatService;
+
+    public SeatsDelegate(SeatService seatService) {
+        this.seatService = seatService;
+    }
 
     public void releaseSeats(DelegateExecution execution) {
         boolean useOriginalSeats = VariableHandler.getSeatsAreAvailable(execution);

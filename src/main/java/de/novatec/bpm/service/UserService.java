@@ -1,9 +1,7 @@
 package de.novatec.bpm.service;
 
 import de.novatec.bpm.model.UserAccount;
-import org.springframework.stereotype.Service;
 
-@Service
 public class UserService {
 
     public boolean userExists(String id) {

@@ -1,4 +1,4 @@
-package de.novatec.bpm;
+package de.novatec.bpm.config;
 
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.spring.boot.starter.configuration.Ordering;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(Ordering.DEFAULT_ORDER + 1)
-public class ApplicationConfig extends AbstractCamundaConfiguration {
+public class CamundaConfig extends AbstractCamundaConfiguration {
 
     @Override
     public void preInit(ProcessEngineConfigurationImpl processEngineConfiguration) {

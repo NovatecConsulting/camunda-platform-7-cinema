@@ -24,7 +24,7 @@ public class ReservationRestController {
     RuntimeService runtimeService;
 
     @PostMapping("/reservation")
-    public ResponseEntity reserveSeat(@RequestBody Reservation reservation) {
+    public ResponseEntity<String> reserveSeat(@RequestBody Reservation reservation) {
         String reservationId = "RESERVATION-" + UUID.randomUUID().toString();
         reservation.setReservationId(reservationId);
         Map<String, Object> variables = new HashMap<>();
@@ -39,7 +39,7 @@ public class ReservationRestController {
     }
 
     @GetMapping("/offer/{id}")
-    public ResponseEntity acceptOffer(@PathVariable String id) {
+    public ResponseEntity<String> acceptOffer(@PathVariable String id) {
         try {
             runtimeService.correlateMessage("SeatsVerifiedByCustomer", id);
             logger.error("The offer for reservation {} was accepted", id);

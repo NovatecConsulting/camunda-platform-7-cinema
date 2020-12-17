@@ -6,22 +6,20 @@ import de.novatec.bpm.service.UserService;
 import de.novatec.bpm.variable.VariableHandler;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class UserDelegate implements JavaDelegate {
+public class UserDelegate {
 
-    Logger logger = LoggerFactory.getLogger(UserDelegate.class);
+    private final Logger logger = LoggerFactory.getLogger(UserDelegate.class);
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
-    @Override
-    public void execute(DelegateExecution execution) throws Exception {
+    public UserDelegate(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void loadUser(DelegateExecution execution) {
         String user = VariableHandler.getReservation(execution).getUserId();
         try {
             UserAccount account = userService.getUserById(user);

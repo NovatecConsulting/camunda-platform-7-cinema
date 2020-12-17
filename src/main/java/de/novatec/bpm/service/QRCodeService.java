@@ -6,7 +6,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 
-@Service
 public class QRCodeService {
 
     public static final int WIDTH = 125;

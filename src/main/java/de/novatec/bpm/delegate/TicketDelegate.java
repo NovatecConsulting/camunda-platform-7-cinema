@@ -12,25 +12,22 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 
-@Component
 public class TicketDelegate {
 
-    Logger logger = LoggerFactory.getLogger(TicketDelegate.class);
+    private final Logger logger = LoggerFactory.getLogger(TicketDelegate.class);
+    private final TicketService ticketService;
+    private final QRCodeService qrCodeService;
+    private final RuntimeService runtimeService;
 
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private QRCodeService qrCodeService;
-
-    @Autowired
-    private RuntimeService runtimeService;
+    public TicketDelegate(TicketService ticketService, QRCodeService qrCodeService, RuntimeService runtimeService) {
+        this.ticketService = ticketService;
+        this.qrCodeService = qrCodeService;
+        this.runtimeService = runtimeService;
+    }
 
     public void generateTickets(DelegateExecution execution) throws IOException, WriterException {
         Reservation reservation = VariableHandler.getReservation(execution);
