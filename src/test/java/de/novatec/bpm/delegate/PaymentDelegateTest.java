@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -28,11 +29,11 @@ class PaymentDelegateTest {
     @Mock
     private PaymentService paymentService;
 
+    @InjectMocks
     private PaymentDelegate delegate;
 
     @BeforeEach
     void setUp() {
-        delegate = new PaymentDelegate(paymentService);
         Reservation reservation = new Reservation();
         UserAccount userAccount = new UserAccount("thrillhouse", "thrillhouse@camunda-cinema.de", "DE123456", "VOBAXXX");
         reservation.setUserAccount(userAccount);
