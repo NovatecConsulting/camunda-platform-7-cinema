@@ -31,11 +31,6 @@ class SeatsDelegateTest {
     @InjectMocks
     private SeatsDelegate delegate;
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     void test_releaseSeats_original_seats() {
         // given
