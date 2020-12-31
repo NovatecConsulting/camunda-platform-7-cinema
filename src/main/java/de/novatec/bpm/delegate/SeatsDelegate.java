@@ -62,11 +62,7 @@ public class SeatsDelegate {
 
     private List<String> getSeatsToReserve(DelegateExecution execution, boolean useOriginalSeats,
                                            Reservation reservation) {
-        if (useOriginalSeats) {
-            return reservation.getSeats();
-        } else {
-            return VariableHandler.getAltSeats(execution);
-        }
+        return useOriginalSeats ? reservation.getSeats() : VariableHandler.getAltSeats(execution);
     }
 
 }

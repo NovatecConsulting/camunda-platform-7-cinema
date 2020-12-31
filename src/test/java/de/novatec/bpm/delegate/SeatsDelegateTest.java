@@ -14,10 +14,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SeatsDelegateTest {
@@ -82,21 +82,111 @@ class SeatsDelegateTest {
     }
 
     @Test
-    void reserveSeats() {
+    void reserveSeats_original_seats() {
+        // given
+        given(execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName())).willReturn(true);
+        List<String> seats = Arrays.asList("D3", "D4");
+        Reservation reservation = createReservation(seats);
+        given(execution.getVariable(ProcessVariables.RESERVATION.getName())).willReturn(reservation);
+        given(seatService.getTicketPrice(anyList())).willReturn(100);
 
+        // when
+        delegate.reserveSeats(execution);
+
+        // then
+        verify(execution, times(1)).getVariable(ProcessVariables.SEATS_AVAILABLE.getName());
+        verify(execution, times(1)).getVariable(ProcessVariables.RESERVATION.getName());
+        verify(seatService, times(1)).getTicketPrice(reservation.getSeats());
+        assertThat(reservation.getPrice()).isEqualTo(100);
+        assertThat(reservation.getSeats()).isEqualTo(seats);
+        verify(seatService, times(1)).reserveSeats(reservation.getSeats());
+        verify(execution, times(1)).setVariable(ProcessVariables.RESERVATION.getName(), reservation);
+        verify(execution, times(0)).getVariable(ProcessVariables.ALT_SEATS.getName());
     }
 
     @Test
-    void checkSeatAvailabilty() {
+    void reserveSeats_alternative_seats() {
+        // given
+        given(execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName())).willReturn(false);
+        List<String> altSeats = Arrays.asList("F3", "F4");
+        given(execution.getVariable(ProcessVariables.ALT_SEATS.getName())).willReturn(altSeats);
+        Reservation reservation = createReservation();
+        given(execution.getVariable(ProcessVariables.RESERVATION.getName())).willReturn(reservation);
+        given(seatService.getTicketPrice(anyList())).willReturn(100);
+
+        // when
+        delegate.reserveSeats(execution);
+
+        // then
+        verify(execution, times(1)).getVariable(ProcessVariables.SEATS_AVAILABLE.getName());
+        verify(execution, times(1)).getVariable(ProcessVariables.RESERVATION.getName());
+        verify(seatService, times(1)).getTicketPrice(reservation.getSeats());
+        assertThat(reservation.getPrice()).isEqualTo(100);
+        assertThat(reservation.getSeats()).isEqualTo(altSeats);
+        verify(seatService, times(1)).reserveSeats(reservation.getSeats());
+        verify(execution, times(1)).setVariable(ProcessVariables.RESERVATION.getName(), reservation);
+        verify(execution, times(1)).getVariable(ProcessVariables.ALT_SEATS.getName());
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void checkSeatAvailabilty_available() {
+        // given
+        List<String> seats = Arrays.asList("D3", "D4");
+        Reservation reservation = createReservation(seats);
+        given(execution.getVariable(ProcessVariables.RESERVATION.getName())).willReturn(reservation);
+        boolean availability = true;
+        given(seatService.seatsAvailable(seats)).willReturn(availability);
+
+        // when
+        delegate.checkSeatAvailabilty(execution);
+
+        // then
+        verify(seatService, times(1)).seatsAvailable(seats);
+        verify(execution, times(1)).setVariable(ProcessVariables.SEATS_AVAILABLE.getName(), availability);
+    }
+
+    @Test
+    @SuppressWarnings("ConstantConditions")
+    void checkSeatAvailabilty_not_available() {
+        // given
+        List<String> seats = Arrays.asList("D3", "D4");
+        Reservation reservation = createReservation(seats);
+        given(execution.getVariable(ProcessVariables.RESERVATION.getName())).willReturn(reservation);
+        boolean availability = false;
+        given(seatService.seatsAvailable(seats)).willReturn(availability);
+
+        // when
+        delegate.checkSeatAvailabilty(execution);
+
+        // then
+        verify(seatService, times(1)).seatsAvailable(seats);
+        verify(execution, times(1)).setVariable(ProcessVariables.SEATS_AVAILABLE.getName(), availability);
     }
 
     @Test
     void offerAltSeats() {
+        // given
+        given(execution.getVariable(ProcessVariables.ALT_SEATS.getName())).willReturn(Arrays.asList("A1", "A2"));
+
+        // when
+        delegate.offerAltSeats(execution);
+
+        // then
+        verify(execution, times(1)).getVariable(ProcessVariables.ALT_SEATS.getName());
+        verify(execution, times(1)).getBusinessKey();
+        verifyNoMoreInteractions(execution);
     }
 
     private Reservation createReservation(String... seat) {
         Reservation reservation = new Reservation();
         List<String> seats = Arrays.asList(seat);
+        reservation.setSeats(seats);
+        return reservation;
+    }
+
+    private Reservation createReservation(List<String> seats) {
+        Reservation reservation = new Reservation();
         reservation.setSeats(seats);
         return reservation;
     }
