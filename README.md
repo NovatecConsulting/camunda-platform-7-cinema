@@ -1,5 +1,5 @@
-## Camunda Cinema
-Camunda Cinema is a showcase for the different concepts in Camunda BPM:
+## BPMN Cinema
+BPMN Cinema is a showcase for the different concepts in open source BPM engines:
 
 - Error Handling
 - Compensation
