@@ -1,5 +1,6 @@
-package de.novatec.bpm.delegate;
+package delegate;
 
+import de.novatec.bpm.delegate.PaymentDelegate;
 import de.novatec.bpm.exception.PaymentException;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.UserAccount;
@@ -7,7 +8,6 @@ import de.novatec.bpm.service.PaymentService;
 import de.novatec.bpm.variable.ProcessVariables;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

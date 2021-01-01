@@ -1,14 +1,15 @@
-package de.novatec.bpm.delegate;
+package delegate;
 
+import de.novatec.bpm.delegate.SeatsDelegate;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.service.SeatService;
 import de.novatec.bpm.variable.ProcessVariables;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
@@ -17,7 +18,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class SeatsDelegateTest {
@@ -170,7 +172,7 @@ class SeatsDelegateTest {
         // then
         verify(execution, times(1)).getVariable(ProcessVariables.ALT_SEATS.getName());
         verify(execution, times(1)).getBusinessKey();
-        verifyNoMoreInteractions(execution);
+        Mockito.verifyNoMoreInteractions(execution);
     }
 
     private Reservation createReservation(String... seat) {

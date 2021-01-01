@@ -1,2 +1,4 @@
-rootProject.name = 'camunda-cinema'
+rootProject.name = 'bpmn-cinema'
+include 'camunda'
+include 'flowable'
 
