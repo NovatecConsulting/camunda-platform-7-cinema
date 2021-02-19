@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'de.novatec.de.novatec.bpm.bpm'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.slf4j:slf4j-api:1.7.30"
+    implementation "com.google.zxing:core:3.4.1" // qrcode generation
+}

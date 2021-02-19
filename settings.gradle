@@ -1,4 +1,5 @@
 rootProject.name = 'bpmn-cinema'
 include 'camunda'
 include 'flowable'
+include 'services'
 

@@ -19,14 +19,18 @@ public class QRCodeService {
     public static final int WIDTH = 125;
     public static final int HEIGHT = WIDTH;
 
-    public File generateQRCode(String ticketId) throws WriterException, IOException {
+    public File generateQRCode(String ticketId) throws IOException {
         File qrCode = new File("build/tickets/" + ticketId + ".png");
         boolean ignored = qrCode.mkdirs();
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix byteMatrix = qrCodeWriter
-                .encode(ticketId, BarcodeFormat.QR_CODE, WIDTH, HEIGHT, hintMap);
+        BitMatrix byteMatrix = null;
+        try {
+            byteMatrix = qrCodeWriter.encode(ticketId, BarcodeFormat.QR_CODE, WIDTH, HEIGHT, hintMap);
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
         // Make the BufferedImage that are to hold the QRCode
         int matrixWidth = byteMatrix.getWidth();
         int matrixHeight = byteMatrix.getWidth();

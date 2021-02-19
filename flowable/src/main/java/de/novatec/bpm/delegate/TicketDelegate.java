@@ -7,8 +7,8 @@ import de.novatec.bpm.model.UserAccount;
 import de.novatec.bpm.service.QRCodeService;
 import de.novatec.bpm.service.TicketService;
 import de.novatec.bpm.variable.VariableHandler;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class TicketDelegate {
         Ticket ticket = ticketService.generateTickets(reservation);
         File qrCode = qrCodeService.generateQRCode(ticket.getCode());
         VariableHandler.setTicket(execution, ticket);
-        VariableHandler.setQRCode(execution, qrCode);
+        // VariableHandler.setQRCode(execution, qrCode);
         logger.info("Ticket {} generated", ticket.getCode());
     }
 
@@ -47,7 +47,7 @@ public class TicketDelegate {
     public void triggerTicketProcess(DelegateExecution execution) {
         Reservation reservation = VariableHandler.getReservation(execution);
         runtimeService.startProcessInstanceByMessage(ProcessMessage.ISSUE_TICKETS.getName(),
-                execution.getBusinessKey(), execution.getVariables());
+                execution.getProcessInstanceBusinessKey(), execution.getVariables());
         logger.info("Tickets for reservation {} are going to be generated",
                 reservation.getReservationId());
     }

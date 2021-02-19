@@ -1,0 +1,9 @@
+spring.application.name: flowableApplication
+server.port: 8088
+flowable:
+  common:
+    app:
+      idm-admin:
+        user: admin
+        password: password
+      idm-url: "http://localhost:8088/flowable-idm"

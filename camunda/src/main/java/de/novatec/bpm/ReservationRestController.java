@@ -1,4 +1,4 @@
-package de.novatec.bpm.service;
+package de.novatec.bpm;
 
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.variable.ProcessVariables;

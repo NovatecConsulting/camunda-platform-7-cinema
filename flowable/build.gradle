@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '2.4.1'
+}
+
+group 'de.novatec.de.novatec.bpm.bpm'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':services')
+    implementation "org.springframework.boot:spring-boot-dependencies:2.4.1"
+    implementation "org.springframework.boot:spring-boot-starter-web:2.4.1"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:2.4.1"
+    implementation "org.flowable:flowable-spring-boot-starter:6.6.0"
+    implementation "com.h2database:h2:1.4.200"
+}
+
+test {
+    useJUnitPlatform()
+}
