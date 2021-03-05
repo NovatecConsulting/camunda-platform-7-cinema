@@ -7,6 +7,7 @@ import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.Ticket;
 import org.flowable.engine.delegate.DelegateExecution;
 
+import java.io.File;
 import java.util.List;
 
 public class FlowableVariableHandler {
@@ -58,7 +59,7 @@ public class FlowableVariableHandler {
     }
 
     public static Ticket getTicket(DelegateExecution execution) {
-        JsonNode variable = (JsonNode) execution.getVariable(ProcessVariables.RESERVATION.getName());
+        JsonNode variable = (JsonNode) execution.getVariable(ProcessVariables.TICKET.getName());
         Ticket value = null;
         try {
             value = objectMapper.treeToValue(variable, Ticket.class);
@@ -69,21 +70,13 @@ public class FlowableVariableHandler {
         }
     }
 
-//    public static void setQRCode(DelegateExecution execution, File qrCode) {
-//        FileValue fileValue = Variables.fileValue(qrCode.getName()).file(qrCode).mimeType("image/png")
-//                .encoding("UTF-8").create();
-//        execution.setVariable(ProcessVariables.QR.getName(), fileValue);
-//    }
-//
-//    public static File getQRCode(DelegateExecution execution) {
-//        TypedValue variableTyped = execution.getVariableTyped(ProcessVariables.QR.getName());
-//        if (variableTyped.getType().equals(ValueType.FILE)) {
-//            return (File) variableTyped.getValue();
-//        } else {
-//            throw new IllegalArgumentException(
-//                    String.format("Variable %s is not typed as file", ProcessVariables.QR.getName()));
-//        }
-//    }
+    public static void setQRCode(DelegateExecution execution, File qrCode) {
+        execution.setVariable(ProcessVariables.QR.getName(), qrCode);
+    }
+
+    public static File getQRCode(DelegateExecution execution) {
+        return (File) execution.getVariable(ProcessVariables.QR.getName());
+    }
 
     private static void checkIfSet(Object value, ProcessVariables variable) {
         if (value == null) {
