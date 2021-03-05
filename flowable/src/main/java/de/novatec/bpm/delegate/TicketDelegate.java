@@ -33,7 +33,7 @@ public class TicketDelegate {
         Ticket ticket = ticketService.generateTickets(reservation);
         File qrCode = qrCodeService.generateQRCode(ticket.getCode());
         FlowableVariableHandler.setTicket(execution, ticket);
-        // VariableHandler.setQRCode(execution, qrCode);
+        FlowableVariableHandler.setQRCode(execution, qrCode);
         logger.info("Ticket {} generated", ticket.getCode());
     }
 
