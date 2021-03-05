@@ -47,7 +47,11 @@
     <exclusiveGateway id="sid-FE04CF22-32D5-4A45-8DFF-4499A4CF4EB8" name="seats available?"></exclusiveGateway>
     <serviceTask id="sid-AD3E342A-0590-440B-9C76-797CD0092E7D" name="reserve seats" flowable:expression="${seatsDelegate.reserveSeats(execution)}"></serviceTask>
     <serviceTask id="sid-C386636C-0349-4102-8A46-5174A1196C23" name="withdraw money" flowable:expression="${paymentDelegate.issueMoney(execution)}"></serviceTask>
-    <endEvent id="sid-29B1A205-E231-4655-9659-CBEE78E97060" name="done"></endEvent>
+    <endEvent id="sid-29B1A205-E231-4655-9659-CBEE78E97060" name="done">
+      <extensionElements>
+        <flowable:executionListener event="end" class="de.novatec.bpm.listener.EndEventListener"></flowable:executionListener>
+      </extensionElements>
+    </endEvent>
     <serviceTask id="sid-880B7F23-58A8-4E81-AE06-DA618D3B9A53" name="select alternative seats" flowable:expression="${seatsDelegate.setAltSeats(execution)}"></serviceTask>
     <serviceTask id="sid-7DBE9D16-5F79-49F1-A2D7-984807751A08" name="offer seats to customer" flowable:expression="${seatsDelegate.offerAltSeats(execution)}"></serviceTask>
     <eventBasedGateway id="sid-FAF1B48B-EA4E-480F-9417-B20CE33E93E5" name="seats verified?"></eventBasedGateway>
@@ -56,17 +60,29 @@
         <timeDuration>PT2M</timeDuration>
       </timerEventDefinition>
     </intermediateCatchEvent>
-    <endEvent id="sid-20ECDFB0-DE96-4F8C-879A-2D52D27E797E" name="cancelled"></endEvent>
+    <endEvent id="sid-20ECDFB0-DE96-4F8C-879A-2D52D27E797E" name="failed">
+      <extensionElements>
+        <flowable:executionListener event="end" class="de.novatec.bpm.listener.EndEventListener"></flowable:executionListener>
+      </extensionElements>
+    </endEvent>
     <subProcess id="sid-6991C77A-7EB9-4814-A5B4-8517A712A78A" name="subProcess" triggeredByEvent="true">
       <startEvent id="sid-17E25D68-59BE-4E97-9883-726208E628A1" name="error occured" isInterrupting="true">
         <errorEventDefinition></errorEventDefinition>
       </startEvent>
       <userTask id="sid-C9243073-C6F2-42DB-AB9E-1EEF2517484F" name="inform customer" flowable:formFieldValidation="true"></userTask>
-      <endEvent id="sid-3207444D-E32E-4A80-B037-E67A27E5CC28"></endEvent>
+      <endEvent id="sid-3207444D-E32E-4A80-B037-E67A27E5CC28">
+        <extensionElements>
+          <flowable:executionListener event="end" class="de.novatec.bpm.listener.EndEventListener"></flowable:executionListener>
+        </extensionElements>
+      </endEvent>
       <sequenceFlow id="sid-AEF7F274-29EF-4C31-A4F2-5F430F9D6D2A" sourceRef="sid-17E25D68-59BE-4E97-9883-726208E628A1" targetRef="sid-C9243073-C6F2-42DB-AB9E-1EEF2517484F"></sequenceFlow>
       <sequenceFlow id="sid-F03DE169-36D7-4C11-87E0-816212BFDBA7" sourceRef="sid-C9243073-C6F2-42DB-AB9E-1EEF2517484F" targetRef="sid-3207444D-E32E-4A80-B037-E67A27E5CC28"></sequenceFlow>
     </subProcess>
-    <endEvent id="sid-D64BBEAC-3221-425A-AA5A-FCBBB84B029D" name="cancelled"></endEvent>
+    <endEvent id="sid-D64BBEAC-3221-425A-AA5A-FCBBB84B029D" name="failed">
+      <extensionElements>
+        <flowable:executionListener event="end" class="de.novatec.bpm.listener.EndEventListener"></flowable:executionListener>
+      </extensionElements>
+    </endEvent>
     <boundaryEvent id="sid-141F8A96-4467-486B-A3F7-636AFE85BF10" name="unknown user" attachedToRef="sid-8959018E-6840-44A1-8E79-8C747BDD21D7">
       <errorEventDefinition errorRef="B002"></errorEventDefinition>
     </boundaryEvent>
