@@ -7,6 +7,12 @@ public class UserAccount {
     private String iban;
     private String bic;
 
+    /**
+     * for serialization the default constructor is needed
+     */
+    public UserAccount() {
+    }
+
     public UserAccount(String userId, String email, String iban, String bic) {
         this.userId = userId;
         this.email = email;
