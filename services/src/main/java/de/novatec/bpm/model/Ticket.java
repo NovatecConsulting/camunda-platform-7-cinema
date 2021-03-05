@@ -8,6 +8,8 @@ public class Ticket {
     private String code;
     private String info;
 
+    public Ticket() {}
+
     public Ticket(String code) {
         this.code = code;
     }
