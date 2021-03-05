@@ -18,7 +18,7 @@ BPMN Cinema is a showcase for the different concepts in open source BPM engines:
 - Gradle 6.7
 
 ## Process Model
-<img src="./src/main/resources/bpmn/ticket-reservation.png" width="900">
+<img src="camunda/src/main/resources/bpmn/ticket-reservation.png" width="900">
 
 ## How to run it
 - start the application 
