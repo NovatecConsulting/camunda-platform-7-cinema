@@ -1,5 +1,6 @@
 package de.novatec.bpm;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.variable.ProcessVariables;
 import org.flowable.engine.RuntimeService;
@@ -23,12 +24,14 @@ public class ReservationRestController {
     @Autowired
     RuntimeService runtimeService;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @PostMapping("/reservation")
     public ResponseEntity<String> reserveSeat(@RequestBody Reservation reservation) {
         String reservationId = "RESERVATION-" + UUID.randomUUID().toString();
         reservation.setReservationId(reservationId);
         Map<String, Object> variables = new HashMap<>();
-        variables.put(ProcessVariables.RESERVATION.getName(), reservation);
+        variables.put(ProcessVariables.RESERVATION.getName(), objectMapper.valueToTree(reservation));
         runtimeService.startProcessInstanceByKey("ticket-reservation", reservationId, variables);
         return new ResponseEntity<>("Reservation issued: " + reservationId, HttpStatus.ACCEPTED);
     }
