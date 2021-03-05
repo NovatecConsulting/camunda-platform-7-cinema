@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation project(':services')
+    implementation project(':common')
     implementation "org.springframework.boot:spring-boot-dependencies:2.4.3"
     implementation "org.springframework.boot:spring-boot-starter-web:2.4.3"
     implementation "org.springframework.boot:spring-boot-starter-jdbc:2.4.3"

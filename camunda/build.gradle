@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation project(':services')
+    implementation project(':common')
     implementation "org.springframework.boot:spring-boot-dependencies:2.4.3"
     implementation "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.14.0"
     implementation "org.camunda.spin:camunda-spin-dataformat-json-jackson:1.10.0" // add json as serializer
