@@ -3,6 +3,7 @@ package de.novatec.bpm.variable;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.novatec.bpm.ProcessVariables;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.Ticket;
 import org.flowable.engine.delegate.DelegateExecution;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class FlowableVariableHandler {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void setReservationSuccess(DelegateExecution execution, boolean value) {
         execution.setVariable(ProcessVariables.PROCESS_SUCCESS.getName(), value);

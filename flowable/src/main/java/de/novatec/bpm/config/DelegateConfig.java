@@ -29,9 +29,4 @@ public class DelegateConfig {
         return new UserDelegate(userService);
     }
 
-    @Bean(name = "loggerDelegate")
-    public LoggerDelegate loggerDelegate() {
-        return new LoggerDelegate();
-    }
-
 }

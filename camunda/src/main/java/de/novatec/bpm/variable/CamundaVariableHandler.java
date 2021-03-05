@@ -1,5 +1,6 @@
 package de.novatec.bpm.variable;
 
+import de.novatec.bpm.ProcessVariables;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.Ticket;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
