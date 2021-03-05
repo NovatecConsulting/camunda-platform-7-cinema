@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static de.novatec.bpm.message.ProcessMessage.TICKETS_VERIFIED;
+
 @RestController
 public class ReservationRestController {
 
@@ -43,15 +45,28 @@ public class ReservationRestController {
 
     @GetMapping("/offer/{id}")
     public ResponseEntity<String> acceptOffer(@PathVariable String id) {
-        Execution execution = runtimeService.createExecutionQuery().processInstanceBusinessKey(id).singleResult();
-        if (execution != null) {
-            runtimeService.messageEventReceived("SeatsVerifiedByCustomer", execution.getId());
+        Execution currentExecution = findSubscribedExecutionIdByBusinessKey(id);
+        if (currentExecution != null) {
+            runtimeService.messageEventReceived(TICKETS_VERIFIED.getName(), currentExecution.getId());
             logger.error("The offer for reservation {} was accepted", id);
             return new ResponseEntity<>("Reservation change accepted", HttpStatus.OK);
         } else {
-            logger.error("The reservation {} does not exist", id);
+            logger.error("Reservation {} doesn't exist", id);
             return new ResponseEntity<>("Reservation doesn't exist", HttpStatus.NOT_FOUND);
         }
+    }
+
+    private Execution findSubscribedExecutionIdByBusinessKey(String id) {
+        Execution parent = runtimeService.createExecutionQuery()
+                .processInstanceBusinessKey(id)
+                .singleResult();
+        if (parent != null) {
+            return runtimeService.createExecutionQuery()
+                    .messageEventSubscriptionName(TICKETS_VERIFIED.getName())
+                    .parentId(parent.getId())
+                    .singleResult();
+        }
+        return null;
     }
 
 }
