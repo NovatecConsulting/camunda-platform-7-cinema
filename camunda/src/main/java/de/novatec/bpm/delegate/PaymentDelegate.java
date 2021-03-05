@@ -4,7 +4,7 @@ import de.novatec.bpm.exception.PaymentException;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.UserAccount;
 import de.novatec.bpm.service.PaymentService;
-import de.novatec.bpm.variable.VariableHandler;
+import de.novatec.bpm.variable.CamundaVariableHandler;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class PaymentDelegate {
     }
 
     public void issueMoney(DelegateExecution execution) {
-        Reservation reservation = VariableHandler.getReservation(execution);
+        Reservation reservation = CamundaVariableHandler.getReservation(execution);
         UserAccount user = reservation.getUserAccount();
         try {
             paymentService.issueMoney(reservation.getPrice(), user.getIban(), user.getBic());
@@ -31,7 +31,7 @@ public class PaymentDelegate {
     }
 
     public void giveMoneyBack(DelegateExecution execution) {
-        Reservation reservation = VariableHandler.getReservation(execution);
+        Reservation reservation = CamundaVariableHandler.getReservation(execution);
         UserAccount user = reservation.getUserAccount();
         paymentService.giveMoneyBack(reservation.getPrice(), user.getIban(), user.getBic());
         logger.info("Transaction successful");

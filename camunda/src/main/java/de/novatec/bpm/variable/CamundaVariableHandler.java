@@ -11,7 +11,7 @@ import org.camunda.bpm.engine.variable.value.TypedValue;
 import java.io.File;
 import java.util.List;
 
-public class VariableHandler {
+public class CamundaVariableHandler {
 
     public static void setReservationSuccess(DelegateExecution execution, boolean value) {
         execution.setVariable(ProcessVariables.PROCESS_SUCCESS.getName(), value);

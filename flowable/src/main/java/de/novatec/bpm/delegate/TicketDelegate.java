@@ -6,7 +6,7 @@ import de.novatec.bpm.model.Ticket;
 import de.novatec.bpm.model.UserAccount;
 import de.novatec.bpm.service.QRCodeService;
 import de.novatec.bpm.service.TicketService;
-import de.novatec.bpm.variable.VariableHandler;
+import de.novatec.bpm.variable.FlowableVariableHandler;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
@@ -29,23 +29,23 @@ public class TicketDelegate {
     }
 
     public void generateTickets(DelegateExecution execution) throws IOException {
-        Reservation reservation = VariableHandler.getReservation(execution);
+        Reservation reservation = FlowableVariableHandler.getReservation(execution);
         Ticket ticket = ticketService.generateTickets(reservation);
         File qrCode = qrCodeService.generateQRCode(ticket.getCode());
-        VariableHandler.setTicket(execution, ticket);
+        FlowableVariableHandler.setTicket(execution, ticket);
         // VariableHandler.setQRCode(execution, qrCode);
         logger.info("Ticket {} generated", ticket.getCode());
     }
 
     public void sendTickets(DelegateExecution execution) {
-        UserAccount user = VariableHandler.getReservation(execution).getUserAccount();
-        Ticket ticket = VariableHandler.getTicket(execution);
+        UserAccount user = FlowableVariableHandler.getReservation(execution).getUserAccount();
+        Ticket ticket = FlowableVariableHandler.getTicket(execution);
         logger.info("Sending tickets to {}", user.getEmail());
         logger.info(ticket.getInfo());
     }
 
     public void triggerTicketProcess(DelegateExecution execution) {
-        Reservation reservation = VariableHandler.getReservation(execution);
+        Reservation reservation = FlowableVariableHandler.getReservation(execution);
         runtimeService.startProcessInstanceByMessage(ProcessMessage.ISSUE_TICKETS.getName(),
                 execution.getProcessInstanceBusinessKey(), execution.getVariables());
         logger.info("Tickets for reservation {} are going to be generated",

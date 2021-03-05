@@ -1,12 +1,17 @@
 package de.novatec.bpm.variable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.Ticket;
 import org.flowable.engine.delegate.DelegateExecution;
 
 import java.util.List;
 
-public class VariableHandler {
+public class FlowableVariableHandler {
+
+    private static ObjectMapper objectMapper = new ObjectMapper();
 
     public static void setReservationSuccess(DelegateExecution execution, boolean value) {
         execution.setVariable(ProcessVariables.PROCESS_SUCCESS.getName(), value);
@@ -23,14 +28,19 @@ public class VariableHandler {
     }
 
     public static void setReservation(DelegateExecution execution, Reservation reservation) {
-        execution.setVariable(ProcessVariables.RESERVATION.getName(), reservation);
+        execution.setVariable(ProcessVariables.RESERVATION.getName(), objectMapper.valueToTree(reservation));
     }
 
     public static Reservation getReservation(DelegateExecution execution) {
-        Reservation reservation = (Reservation) execution.getVariable(
-                ProcessVariables.RESERVATION.getName());
-        checkIfSet(reservation, ProcessVariables.RESERVATION);
-        return reservation;
+        JsonNode variable = (JsonNode) execution.getVariable(ProcessVariables.RESERVATION.getName());
+        Reservation reservation = null;
+        try {
+            reservation = objectMapper.treeToValue(variable, Reservation.class);
+            checkIfSet(reservation, ProcessVariables.RESERVATION);
+            return reservation;
+        } catch (JsonProcessingException e) {
+            return reservation;
+        }
     }
 
     public static List<String> getAltSeats(DelegateExecution execution) {
@@ -44,13 +54,19 @@ public class VariableHandler {
     }
 
     public static void setTicket(DelegateExecution execution, Ticket ticket) {
-        execution.setVariable(ProcessVariables.TICKET.getName(), ticket);
+        execution.setVariable(ProcessVariables.TICKET.getName(), objectMapper.valueToTree(ticket));
     }
 
     public static Ticket getTicket(DelegateExecution execution) {
-        Ticket value = (Ticket) execution.getVariable(ProcessVariables.TICKET.getName());
-        checkIfSet(value, ProcessVariables.TICKET);
-        return value;
+        JsonNode variable = (JsonNode) execution.getVariable(ProcessVariables.RESERVATION.getName());
+        Ticket value = null;
+        try {
+            value = objectMapper.treeToValue(variable, Ticket.class);
+            checkIfSet(value, ProcessVariables.TICKET);
+            return value;
+        } catch (JsonProcessingException e) {
+            return value;
+        }
     }
 
 //    public static void setQRCode(DelegateExecution execution, File qrCode) {

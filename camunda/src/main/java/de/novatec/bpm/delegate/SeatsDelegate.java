@@ -2,7 +2,7 @@ package de.novatec.bpm.delegate;
 
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.service.SeatService;
-import de.novatec.bpm.variable.VariableHandler;
+import de.novatec.bpm.variable.CamundaVariableHandler;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,45 +24,45 @@ public class SeatsDelegate {
     }
 
     public void releaseSeats(DelegateExecution execution) {
-        boolean useOriginalSeats = VariableHandler.getSeatsAreAvailable(execution);
+        boolean useOriginalSeats = CamundaVariableHandler.getSeatsAreAvailable(execution);
         List<String> seats;
         if (useOriginalSeats) {
-            seats = VariableHandler.getReservation(execution).getSeats();
+            seats = CamundaVariableHandler.getReservation(execution).getSeats();
         } else {
-            seats = VariableHandler.getAltSeats(execution);
+            seats = CamundaVariableHandler.getAltSeats(execution);
         }
         seatService.releaseSeats(seats);
     }
 
     public void setAltSeats(DelegateExecution execution) {
-        List<String> seats = VariableHandler.getReservation(execution).getSeats();
-        VariableHandler.setAltSeats(execution, seatService.getAlternativeSeats(seats));
+        List<String> seats = CamundaVariableHandler.getReservation(execution).getSeats();
+        CamundaVariableHandler.setAltSeats(execution, seatService.getAlternativeSeats(seats));
     }
 
     public void reserveSeats(DelegateExecution execution) {
-        boolean useOriginalSeats = VariableHandler.getSeatsAreAvailable(execution);
-        Reservation reservation = VariableHandler.getReservation(execution);
+        boolean useOriginalSeats = CamundaVariableHandler.getSeatsAreAvailable(execution);
+        Reservation reservation = CamundaVariableHandler.getReservation(execution);
         List<String> seats = getSeatsToReserve(execution, useOriginalSeats, reservation);
         reservation.setPrice(seatService.getTicketPrice(seats));
         seatService.reserveSeats(seats);
         reservation.setSeats(seats);
-        VariableHandler.setReservation(execution, reservation);
+        CamundaVariableHandler.setReservation(execution, reservation);
     }
 
     public void checkSeatAvailabilty(DelegateExecution execution) {
-        List<String> seats = VariableHandler.getReservation(execution).getSeats();
-        VariableHandler.setSeatsAreAvailable(execution, seatService.seatsAvailable(seats));
+        List<String> seats = CamundaVariableHandler.getReservation(execution).getSeats();
+        CamundaVariableHandler.setSeatsAreAvailable(execution, seatService.seatsAvailable(seats));
     }
 
     public void offerAltSeats(DelegateExecution execution) {
-        List<String> seats = VariableHandler.getAltSeats(execution);
+        List<String> seats = CamundaVariableHandler.getAltSeats(execution);
         logger.info("The seats you selected are not available. Alternative seats are {}", seats);
         logger.info("To accept these seats, click the following link: http://localhost:{}/offer/{}", port, execution.getBusinessKey());
     }
 
     private List<String> getSeatsToReserve(DelegateExecution execution, boolean useOriginalSeats,
                                            Reservation reservation) {
-        return useOriginalSeats ? reservation.getSeats() : VariableHandler.getAltSeats(execution);
+        return useOriginalSeats ? reservation.getSeats() : CamundaVariableHandler.getAltSeats(execution);
     }
 
 }

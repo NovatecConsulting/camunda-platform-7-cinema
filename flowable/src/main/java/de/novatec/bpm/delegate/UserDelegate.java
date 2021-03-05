@@ -3,7 +3,7 @@ package de.novatec.bpm.delegate;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.UserAccount;
 import de.novatec.bpm.service.UserService;
-import de.novatec.bpm.variable.VariableHandler;
+import de.novatec.bpm.variable.FlowableVariableHandler;
 import org.flowable.engine.delegate.BpmnError;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
@@ -20,12 +20,12 @@ public class UserDelegate {
     }
 
     public void loadUser(DelegateExecution execution) {
-        String user = VariableHandler.getReservation(execution).getUserId();
+        String user = FlowableVariableHandler.getReservation(execution).getUserId();
         try {
             UserAccount account = userService.getUserById(user);
-            Reservation reservation = VariableHandler.getReservation(execution);
+            Reservation reservation = FlowableVariableHandler.getReservation(execution);
             reservation.setUserAccount(account);
-            VariableHandler.setReservation(execution, reservation);
+            FlowableVariableHandler.setReservation(execution, reservation);
             logger.info("User {} exists", user);
         } catch (IllegalArgumentException e) {
             if (e.getMessage().equals("User unknown")) {

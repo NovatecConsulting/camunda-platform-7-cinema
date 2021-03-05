@@ -3,7 +3,7 @@ package de.novatec.bpm.delegate;
 import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.model.UserAccount;
 import de.novatec.bpm.service.UserService;
-import de.novatec.bpm.variable.VariableHandler;
+import de.novatec.bpm.variable.CamundaVariableHandler;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
@@ -20,12 +20,12 @@ public class UserDelegate {
     }
 
     public void loadUser(DelegateExecution execution) {
-        String user = VariableHandler.getReservation(execution).getUserId();
+        String user = CamundaVariableHandler.getReservation(execution).getUserId();
         try {
             UserAccount account = userService.getUserById(user);
-            Reservation reservation = VariableHandler.getReservation(execution);
+            Reservation reservation = CamundaVariableHandler.getReservation(execution);
             reservation.setUserAccount(account);
-            VariableHandler.setReservation(execution, reservation);
+            CamundaVariableHandler.setReservation(execution, reservation);
             logger.info("User {} exists", user);
         } catch (IllegalArgumentException e) {
             if (e.getMessage().equals("User unknown")) {
