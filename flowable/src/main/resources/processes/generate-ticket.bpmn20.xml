@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <message id="IssueTickets" name="IssueTickets"></message>
+  <process id="generate-ticket" name="generate-ticket" isExecutable="true">
+    <startEvent id="sid-6B492F83-B9D6-4AE7-B332-B85005F95026" isInterrupting="true">
+      <messageEventDefinition messageRef="IssueTickets"></messageEventDefinition>
+    </startEvent>
+    <sequenceFlow id="sid-2993D4FA-1782-49A1-8585-71396280641F" sourceRef="sid-6B492F83-B9D6-4AE7-B332-B85005F95026" targetRef="sid-4F6730DB-F417-46D5-8417-B881318C8B3A"></sequenceFlow>
+    <serviceTask id="sid-4F6730DB-F417-46D5-8417-B881318C8B3A" name="generate code" flowable:expression="${ticketDelegate.generateTickets(execution)}"></serviceTask>
+    <sequenceFlow id="sid-030873EC-A04C-4B6F-A762-97A5D93F6406" sourceRef="sid-4F6730DB-F417-46D5-8417-B881318C8B3A" targetRef="sid-764486D5-D90B-4C6C-AAC2-3C797D54F02A"></sequenceFlow>
+    <serviceTask id="sid-764486D5-D90B-4C6C-AAC2-3C797D54F02A" name="send to customer" flowable:expression="${ticketDelegate.sendTickets(execution)}"></serviceTask>
+    <endEvent id="sid-35C2EE09-B360-4824-8C56-754E874A6574"></endEvent>
+    <sequenceFlow id="sid-27E68223-1E67-435E-977D-A44F3C2E0441" sourceRef="sid-764486D5-D90B-4C6C-AAC2-3C797D54F02A" targetRef="sid-35C2EE09-B360-4824-8C56-754E874A6574"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_generate-ticket">
+    <bpmndi:BPMNPlane bpmnElement="generate-ticket" id="BPMNPlane_generate-ticket">
+      <bpmndi:BPMNShape bpmnElement="sid-6B492F83-B9D6-4AE7-B332-B85005F95026" id="BPMNShape_sid-6B492F83-B9D6-4AE7-B332-B85005F95026">
+        <omgdc:Bounds height="30.0" width="30.5" x="90.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-4F6730DB-F417-46D5-8417-B881318C8B3A" id="BPMNShape_sid-4F6730DB-F417-46D5-8417-B881318C8B3A">
+        <omgdc:Bounds height="80.0" width="100.0" x="165.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-764486D5-D90B-4C6C-AAC2-3C797D54F02A" id="BPMNShape_sid-764486D5-D90B-4C6C-AAC2-3C797D54F02A">
+        <omgdc:Bounds height="80.0" width="100.0" x="315.0" y="135.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-35C2EE09-B360-4824-8C56-754E874A6574" id="BPMNShape_sid-35C2EE09-B360-4824-8C56-754E874A6574">
+        <omgdc:Bounds height="28.0" width="28.0" x="480.0" y="164.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-2993D4FA-1782-49A1-8585-71396280641F" id="BPMNEdge_sid-2993D4FA-1782-49A1-8585-71396280641F">
+        <omgdi:waypoint x="120.94999831807726" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="165.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-030873EC-A04C-4B6F-A762-97A5D93F6406" id="BPMNEdge_sid-030873EC-A04C-4B6F-A762-97A5D93F6406">
+        <omgdi:waypoint x="264.9499999999581" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="315.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-27E68223-1E67-435E-977D-A44F3C2E0441" id="BPMNEdge_sid-27E68223-1E67-435E-977D-A44F3C2E0441">
+        <omgdi:waypoint x="414.95000000000005" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="480.0" y="175.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
