@@ -9,27 +9,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DelegateConfig {
 
-    @Bean
+    @Bean(name = "paymentDelegate")
     public PaymentDelegate paymentDelegate(PaymentService paymentService) {
         return new PaymentDelegate(paymentService);
     }
 
-    @Bean
+    @Bean(name = "seatsDelegate")
     public SeatsDelegate seatsDelegate(SeatService seatService) {
         return new SeatsDelegate(seatService);
     }
 
-    @Bean
+    @Bean(name = "ticketDelegate")
     public TicketDelegate ticketDelegate(TicketService ticketService, QRCodeService qrCodeService, RuntimeService runtimeService) {
         return new TicketDelegate(ticketService, qrCodeService, runtimeService);
     }
 
-    @Bean
+    @Bean(name = "userDelegate")
     public UserDelegate userDelegate(UserService userService) {
         return new UserDelegate(userService);
     }
 
-    @Bean
+    @Bean(name = "loggerDelegate")
     public LoggerDelegate loggerDelegate() {
         return new LoggerDelegate();
     }
