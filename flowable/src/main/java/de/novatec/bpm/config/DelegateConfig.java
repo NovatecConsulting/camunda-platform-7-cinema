@@ -1,9 +1,6 @@
 package de.novatec.bpm.config;
 
-import de.novatec.bpm.delegate.PaymentDelegate;
-import de.novatec.bpm.delegate.SeatsDelegate;
-import de.novatec.bpm.delegate.TicketDelegate;
-import de.novatec.bpm.delegate.UserDelegate;
+import de.novatec.bpm.delegate.*;
 import de.novatec.bpm.service.*;
 import org.flowable.engine.RuntimeService;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +27,11 @@ public class DelegateConfig {
     @Bean
     public UserDelegate userDelegate(UserService userService) {
         return new UserDelegate(userService);
+    }
+
+    @Bean
+    public LoggerDelegate loggerDelegate() {
+        return new LoggerDelegate();
     }
 
 }
