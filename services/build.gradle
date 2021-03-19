@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-group 'de.novatec.de.novatec.bpm.bpm'
+group 'de.novatec.bpm'
 version '1.0-SNAPSHOT'
 
 repositories {
