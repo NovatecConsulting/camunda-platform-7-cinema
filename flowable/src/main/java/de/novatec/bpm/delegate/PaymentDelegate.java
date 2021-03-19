@@ -25,7 +25,8 @@ public class PaymentDelegate {
         try {
             paymentService.issueMoney(reservation.getPrice(), user.getIban(), user.getBic());
         } catch (PaymentException e) {
-            throw new BpmnError("B002");
+            logger.error(e.getMessage());
+            throw new BpmnError("B003");
         }
         logger.info("Transaction successful");
     }
