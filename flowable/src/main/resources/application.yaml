@@ -1,5 +1,6 @@
 spring.application.name: flowableApplication
 server.port: 8088
+cinema.delegate.payment.error: true
 flowable:
   common:
     app:
