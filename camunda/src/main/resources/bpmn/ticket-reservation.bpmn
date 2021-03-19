@@ -34,7 +34,7 @@
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1i5khvm" name="reservation failed">
       <bpmn:extensionElements>
-        <camunda:executionListener class="de.novatec.bpm.listener.EndEventListener" event="end" />
+        <camunda:executionListener class="de.novatec.bpm.listener.CustomEventListener" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1xcwr6d</bpmn:incoming>
     </bpmn:endEvent>
@@ -63,7 +63,7 @@
     <bpmn:serviceTask id="Activity_06efmqi" name="give money back" isForCompensation="true" camunda:expression="${paymentDelegate.giveMoneyBack(execution)}" />
     <bpmn:endEvent id="Event_13clf6n" name="reservation successful">
       <bpmn:extensionElements>
-        <camunda:executionListener class="de.novatec.bpm.listener.EndEventListener" event="end" />
+        <camunda:executionListener class="de.novatec.bpm.listener.CustomEventListener" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ffwyuj</bpmn:incoming>
     </bpmn:endEvent>
@@ -74,7 +74,7 @@
     </bpmn:intermediateThrowEvent>
     <bpmn:endEvent id="Event_1iujpo5" name="reservation failed">
       <bpmn:extensionElements>
-        <camunda:executionListener class="de.novatec.bpm.listener.EndEventListener" event="end" />
+        <camunda:executionListener class="de.novatec.bpm.listener.CustomEventListener" event="end" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0110enw</bpmn:incoming>
     </bpmn:endEvent>
@@ -104,7 +104,7 @@
       </bpmn:intermediateThrowEvent>
       <bpmn:endEvent id="Event_1smnvv6" name="reservation failed">
         <bpmn:extensionElements>
-          <camunda:executionListener class="de.novatec.bpm.listener.EndEventListener" event="end" />
+          <camunda:executionListener class="de.novatec.bpm.listener.CustomEventListener" event="end" />
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1k54ugb</bpmn:incoming>
       </bpmn:endEvent>
