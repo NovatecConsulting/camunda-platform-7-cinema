@@ -6,19 +6,21 @@ import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EndEventListener implements ExecutionListener {
+public class CustomEventListener implements ExecutionListener {
 
-    private final Logger logger = LoggerFactory.getLogger(EndEventListener.class);
+    private final Logger logger = LoggerFactory.getLogger(CustomEventListener.class);
 
     @Override
     public void notify(DelegateExecution execution) {
-        if (execution.getEventName().equals(EndEventListener.EVENTNAME_END)) {
+        if (execution.getEventName().equals(EVENTNAME_END)) {
             if (execution.getCurrentActivityName().contains("failed")) {
                 logger.info("End event with status failed was reached");
                 CamundaVariableHandler.setReservationSuccess(execution, false);
-            } else {
+            } else if(execution.getCurrentActivityName().contains("successful")) {
                 logger.info("End event with status success was reached");
                 CamundaVariableHandler.setReservationSuccess(execution, true);
+            } else if (execution.getCurrentActivityName().contains("compensate")) {
+                logger.info("compensation fired");
             }
         }
     }
