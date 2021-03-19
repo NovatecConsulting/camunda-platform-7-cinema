@@ -13,13 +13,14 @@ public class CustomEventListener implements ExecutionListener {
     @Override
     public void notify(DelegateExecution execution) {
         if (execution.getEventName().equals(EVENTNAME_END)) {
-            if (execution.getCurrentActivityName().contains("failed")) {
+            String currentActivityName = execution.getCurrentActivityName();
+            if (currentActivityName.contains("failed")) {
                 logger.info("End event with status failed was reached");
                 CamundaVariableHandler.setReservationSuccess(execution, false);
-            } else if(execution.getCurrentActivityName().contains("successful")) {
+            } else if(currentActivityName.contains("successful")) {
                 logger.info("End event with status success was reached");
                 CamundaVariableHandler.setReservationSuccess(execution, true);
-            } else if (execution.getCurrentActivityName().contains("compensate")) {
+            } else if (currentActivityName.contains("compensate")) {
                 logger.info("compensation fired");
             }
         }
