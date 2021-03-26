@@ -17,7 +17,7 @@
     - use your IDE to start the application
 - go to `localhost:8088` to get to the camunda webapps
 - use a REST client to make a reservation:
-    - endpoint `localhost:8087/reservation`
+    - endpoint `localhost:8088/reservation`
     - POST request 
         - body: `{ "userId":"max.mustermann", "seats": [ "A1", "A2" ] }`
         - content-type: `application/json`
