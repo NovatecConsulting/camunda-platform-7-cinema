@@ -9,7 +9,7 @@
 - Gradle 6.7
 
 ## Process Model
-<img src="flowable/src/main/resources/processes/ticket-reservation.png" width="900">
+<img src="src/main/resources/processes/ticket-reservation.png" width="900">
 
 ## How to run it
 - start the application 
