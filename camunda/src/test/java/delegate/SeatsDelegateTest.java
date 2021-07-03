@@ -5,8 +5,12 @@ import de.novatec.bpm.model.Reservation;
 import de.novatec.bpm.service.SeatService;
 import de.novatec.bpm.variable.ProcessVariables;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,7 +38,7 @@ class SeatsDelegateTest {
     private SeatsDelegate delegate;
 
     @Test
-    void test_releaseSeats_original_seats() {
+    void test_releaseSeats_original_seats_are_released_when_set() {
         // given
         Reservation reservation = createReservation("A1", "A2");
         given(execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName())).willReturn(true);
@@ -48,7 +52,7 @@ class SeatsDelegateTest {
     }
 
     @Test
-    void test_releaseSeats_alternative_seats() {
+    void test_releaseSeats_alternative_seats_are_released_when_original_not_available() {
         // given
         given(execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName())).willReturn(false);
         List<String> altSeats = Arrays.asList("C1", "C2");
@@ -63,7 +67,7 @@ class SeatsDelegateTest {
     }
 
     @Test
-    void setAltSeats() {
+    void test_setAltSeats_alternative_seats_are_fetched_and_set() {
         // given
         List<String> altSeats = Arrays.asList("C4", "C5");
         Reservation reservation = createReservation("D3", "D4");
@@ -79,7 +83,7 @@ class SeatsDelegateTest {
     }
 
     @Test
-    void reserveSeats_original_seats() {
+    void test_reserveSeats_original_seats_are_reserved_when_available_and_price_is_calculated() {
         // given
         given(execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName())).willReturn(true);
         List<String> seats = Arrays.asList("D3", "D4");
@@ -102,7 +106,7 @@ class SeatsDelegateTest {
     }
 
     @Test
-    void reserveSeats_alternative_seats() {
+    void test_reserveSeats_alternative_seats_are_reserved_and_price_calculated() {
         // given
         given(execution.getVariable(ProcessVariables.SEATS_AVAILABLE.getName())).willReturn(false);
         List<String> altSeats = Arrays.asList("F3", "F4");
@@ -125,32 +129,13 @@ class SeatsDelegateTest {
         verify(execution, times(1)).getVariable(ProcessVariables.ALT_SEATS.getName());
     }
 
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void checkSeatAvailabilty_available() {
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void test_checkSeatAvailabilty_seat_availability_is_set(boolean availability) {
         // given
         List<String> seats = Arrays.asList("D3", "D4");
         Reservation reservation = createReservation(seats);
         given(execution.getVariable(ProcessVariables.RESERVATION.getName())).willReturn(reservation);
-        boolean availability = true;
-        given(seatService.seatsAvailable(seats)).willReturn(availability);
-
-        // when
-        delegate.checkSeatAvailabilty(execution);
-
-        // then
-        verify(seatService, times(1)).seatsAvailable(seats);
-        verify(execution, times(1)).setVariable(ProcessVariables.SEATS_AVAILABLE.getName(), availability);
-    }
-
-    @Test
-    @SuppressWarnings("ConstantConditions")
-    void checkSeatAvailabilty_not_available() {
-        // given
-        List<String> seats = Arrays.asList("D3", "D4");
-        Reservation reservation = createReservation(seats);
-        given(execution.getVariable(ProcessVariables.RESERVATION.getName())).willReturn(reservation);
-        boolean availability = false;
         given(seatService.seatsAvailable(seats)).willReturn(availability);
 
         // when

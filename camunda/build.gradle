@@ -20,7 +20,7 @@ dependencies {
     implementation "org.camunda.bpm:camunda-engine-plugin-spin:7.15.0" // needed to activate spin
     implementation "com.h2database:h2:1.4.200"
 
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:2.4.8"
 }
 
 test {
