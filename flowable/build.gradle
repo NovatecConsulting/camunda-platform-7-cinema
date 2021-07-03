@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version '2.4.3'
+    id 'org.springframework.boot' version '2.4.8'
 }
 
 group 'de.novatec.bpm'
@@ -14,11 +14,11 @@ repositories {
 dependencies {
     implementation project(':services')
     implementation project(':common')
-    implementation "org.springframework.boot:spring-boot-dependencies:2.4.3"
-    implementation "org.springframework.boot:spring-boot-starter-web:2.4.3"
-    implementation "org.springframework.boot:spring-boot-starter-jdbc:2.4.3"
+    implementation "org.springframework.boot:spring-boot-dependencies:2.4.8"
+    implementation "org.springframework.boot:spring-boot-starter-web:2.4.8"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:2.4.8"
     implementation "org.flowable:flowable-spring-boot-starter:6.6.0"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.12.0"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.12.3"
     implementation "com.h2database:h2:1.4.200"
 }
 
