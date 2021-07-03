@@ -2,7 +2,7 @@
 BPMN Cinema is a showcase for the different concepts in open source BPM engines
 
 ### Engines
-- Camunda 7.14
+- Camunda 7.15
 - Flowable 6.6  
 
 ### Techniques
