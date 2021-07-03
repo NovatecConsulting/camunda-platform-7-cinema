@@ -6,7 +6,7 @@
 - H2 (in Memory DB) 1.4
 - JDK 11
 - ZXing (Zebra Crossing) 3.4 for QRCode generation
-- Gradle 6.7
+- Gradle 7.1
 
 ## Process Model
 <img src="src/main/resources/bpmn/ticket-reservation.png" width="900">
