@@ -1,0 +1,28 @@
+plugins {
+    id 'java-platform'
+}
+
+dependencies {
+    constraints {
+        // springboot
+        api "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+        api "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        api "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+        api "org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion"
+
+        // camunda
+        api "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:$camundaVersion"
+        api "org.camunda.bpm:camunda-engine-plugin-spin:$camundaVersion"
+        api "org.camunda.spin:camunda-spin-dataformat-json-jackson:$spinDataJsonJacksonVersion"
+
+        // flowable
+        api "org.flowable:flowable-spring-boot-starter:$flowableVersion"
+
+        // others
+        api "com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion"
+        api "com.h2database:h2:$h2Version"
+        api "org.slf4j:slf4j-api:$slf4jVersion"
+        api "com.google.zxing:core:$zxingVersion"
+        api "org.apache.commons:commons-lang3:" + commonsLangVersion
+    }
+}

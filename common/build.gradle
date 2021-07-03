@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'idea'
 }
 
@@ -11,5 +11,6 @@ repositories {
 }
 
 dependencies {
-    implementation "org.slf4j:slf4j-api:1.7.31"
+    api platform(project(':platform'))
+    api "org.slf4j:slf4j-api"
 }

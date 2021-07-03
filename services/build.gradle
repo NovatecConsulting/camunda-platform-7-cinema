@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'idea'
 }
 
@@ -11,7 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation "org.slf4j:slf4j-api:1.7.30"
-    implementation "com.google.zxing:core:3.4.1" // qrcode generation
-    implementation "org.apache.commons:commons-lang3:3.12.0" // random string generator
+    api platform(project(':platform'))
+    api "org.slf4j:slf4j-api"
+    api "com.google.zxing:core" // qrcode generation
+    api "org.apache.commons:commons-lang3" // random string generator
 }

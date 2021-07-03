@@ -1,6 +1,6 @@
 rootProject.name = 'bpmn-cinema'
+include 'platform'
 include 'camunda'
 include 'flowable'
 include 'services'
 include 'common'
-

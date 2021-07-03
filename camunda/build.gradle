@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'idea'
     id 'org.springframework.boot' version '2.4.8'
 }
@@ -12,15 +12,16 @@ repositories {
 }
 
 dependencies {
-    implementation project(':services')
-    implementation project(':common')
-    implementation "org.springframework.boot:spring-boot-dependencies:2.4.8"
-    implementation "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.15.0"
-    implementation "org.camunda.spin:camunda-spin-dataformat-json-jackson:1.10.1" // add json as serializer
-    implementation "org.camunda.bpm:camunda-engine-plugin-spin:7.15.0" // needed to activate spin
-    implementation "com.h2database:h2:1.4.200"
+    api platform(project(':platform'))
+    api project(':services')
+    api project(':common')
+    api "org.springframework.boot:spring-boot-dependencies"
+    api "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp"
+    api "org.camunda.spin:camunda-spin-dataformat-json-jackson" // add json as serializer
+    api "org.camunda.bpm:camunda-engine-plugin-spin" // needed to activate spin
+    api "com.h2database:h2"
 
-    testImplementation "org.springframework.boot:spring-boot-starter-test:2.4.8"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 test {
