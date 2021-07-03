@@ -1,8 +1,8 @@
 ## Camunda Variant
 
 ### Versions
-- SpringBoot 2.3
-- Camunda 7.14
+- SpringBoot 2.4
+- Camunda 7.15
 - H2 (in Memory DB) 1.4
 - JDK 11
 - ZXing (Zebra Crossing) 3.4 for QRCode generation
